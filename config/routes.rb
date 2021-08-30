@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'newpost', to: 'posts#new'
   resources :posts, only: [:show, :create, :edit, :update, :destroy]
   
-  resources :responses, only: [:new, :create, :destroy]
+  resources :comments, only: [:new, :create, :destroy]
   
-  resources :recomments, only: [:new, :create, :destroy]
+  resources :replies, only: [:new, :create, :destroy]
 end

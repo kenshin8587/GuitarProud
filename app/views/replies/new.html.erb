@@ -1,0 +1,12 @@
+<h3 class="ui medium header">返信</h3>
+<div class="ui reply form">
+  <%= form_with(model: @reply, local: true) do |f| %>
+    <%= hidden_field_tag :post_id, @post.id %>
+    <%= hidden_field_tag :comment_id, @comment.id %>
+    <div class="six wide field">
+      <%= f.text_area :content %>
+    </div>
+    
+    <%= f.submit '返信する', class: 'ui primary button' %>
+  <% end %>
+</div>

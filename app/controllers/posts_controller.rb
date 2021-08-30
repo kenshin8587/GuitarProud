@@ -4,13 +4,12 @@ class PostsController < ApplicationController
   
   def show
     @post = Post.find(params[:id])
-    @responses = Response.where(post_id: @post.id)
-    @recomments = Recomment.all
+    @comments = Comment.where(post_id: @post.id)
+    @replies = Reply.all
   end
   
   def new
     @post = current_user.posts.build
-    @post.images.build
   end
 
   def create

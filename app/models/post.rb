@@ -8,8 +8,6 @@ class Post < ApplicationRecord
   scope :get_by_bandname, ->(bandname) { where("bandname like ?", "%#{bandname}%") }
   scope :get_by_part, ->(part) { where("part like ?", "%#{part}%") } 
   
-  has_many :responses, dependent: :destroy
-  has_many :recomments, dependent: :destroy
-  has_many :images, dependent: :destroy
-  accepts_nested_attributes_for :images
+  has_many :comments, dependent: :destroy
+  has_many :replies, dependent: :destroy
 end
