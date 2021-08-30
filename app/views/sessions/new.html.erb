@@ -1,0 +1,21 @@
+<div class="ui medium header">
+  <h2>ログイン</h2>
+</div>
+
+<%= form_with(url: login_path, scope: :session, local: true) do |f| %>
+  <div class="ui form">
+    <div class="field">
+      <%= f.label :email, 'メールアドレス' %>
+      <%= f.email_field :email %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :password, 'パスワード' %>
+      <%= f.password_field :password %>
+    </div>
+    
+      <%= f.submit 'ログインする', class: 'ui green button' %>
+  </div>
+<% end %>
+
+<%= link_to 'アカウントを持っていない場合はこちら', signup_path %>
