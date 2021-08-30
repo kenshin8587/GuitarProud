@@ -1,0 +1,6 @@
+<h1><%= @user.name %></h1>
+<h2 class="header">バンド一覧</h2>
+<% if current_user.id == @user.id %>
+  <%= link_to '新しい投稿', newpost_path, class: 'ui primary button' %>
+<% end %>
+<%= render 'posts/post', posts: @posts %>

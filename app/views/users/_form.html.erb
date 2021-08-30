@@ -1,0 +1,31 @@
+<%= form_with(model: user, local: true) do |f| %>
+    <%= render 'layouts/error_messages', model: f.object %>
+    <div class="ui form">
+  
+      <div class="field">
+        <%= f.label :name, '名前' %>
+        <%= f.text_field :name %>
+      </div>
+        
+      <div class="field">
+        <%= f.label :email, 'メールアドレス' %>
+        <%= f.email_field :email %>
+      </div>
+      
+      <div class="field">
+        <%= f.label :password, 'パスワード' %>
+        <%= f.password_field :password %>
+      </div>
+        
+      <div class="field">
+        <%= f.label :password_confirmation, 'パスワード再入力' %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+        
+      <% if logged_in? %>  
+        <%= f.submit 'プロフィールを変更する', class: 'ui green button' %>
+      <% else %>
+        <%= f.submit 'アカウントを作成する', class: 'ui primary button' %>
+      <% end %>
+    </div>
+  <% end %>
