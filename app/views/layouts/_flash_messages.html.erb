@@ -1,0 +1,9 @@
+<% flash.each do |message_type, message| %>
+    <div class="ui grid">
+      <div class="seven wide column">
+        <div class="ui <%= message_type %> message">
+          <div class="header"><%= message %></div>
+        </div>
+      </div>
+    </div>
+    <% end %>

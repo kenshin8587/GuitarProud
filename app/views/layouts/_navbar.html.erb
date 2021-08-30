@@ -1,0 +1,28 @@
+<div class="ui inverted segment">
+  <div class="ui inverted secondary menu">
+    <div class="ui sizer vertical segment"><%= link_to 'GuitarProud', root_url, class: 'ui red large header' %></div>
+    <% if logged_in? %>
+      <%= link_to 'ユーザー', users_path, class: 'item' %>
+      <div class="ui dropdown item">
+        <%= current_user.name %>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <%= link_to 'My Profile', user_path(current_user), class: 'item' %>
+          <%= link_to 'Edit', edit_user_path(current_user), class: 'item' %>
+          <div class="divider"></div>
+          <%= link_to 'Delete my account', user_path(current_user), method: :delete, data: { confirm: "you sure?" }, class: 'item' %>
+        </div>
+      </div>
+      <script>
+        $('.ui.dropdown').dropdown();
+      </script>
+      <%= link_to 'ログアウト', logout_path, method: :delete, class: 'item' %>
+      <div class="right menu">
+        <%= link_to '新しい投稿', newpost_path, class: 'item' %>
+      </div>
+    <% else %>
+      <%= link_to 'アカウント作成', signup_path, class: 'item' %>
+      <%= link_to 'ログイン', login_path, class: 'item' %>
+    <% end %>
+  </div>
+</div>
