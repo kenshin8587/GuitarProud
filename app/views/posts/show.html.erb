@@ -1,0 +1,84 @@
+<div class="ui segment">
+  <h2 class="ui left floated header"><%= @post.bandname %></h2>
+  <div class="ui clearing divider"></div>
+    <table class="ui table">
+      <tbody>
+        <tr>
+          <td>バンド名</td>
+          <td><%= @post.bandname %></td>
+        </tr>
+        <tr>
+          <td>メンバー数</td>
+          <td><%= @post.member %></td>
+        </tr>
+        <tr>
+          <td>足りないパート</td>
+          <td><%= @post.part %></td>
+        </tr>
+        <tr>
+          <td>ひとこと</td>
+          <td><%= @post.remark %></td>
+        </tr>
+        <tr>
+          <td>作成者</td>
+          <td><%= link_to @post.user.name, user_path(@post.user) %></td>
+        </tr>
+      </tbody>
+    </table>
+  <%= link_to 'コメントする', new_response_path(:post_id => @post.id), class: 'ui button' %>
+  <% if current_user.id == @post.user.id %>
+    <%= link_to '編集する', edit_post_path(@post), class: 'ui green button' %>
+    <%= link_to '削除する', post_path(@post), method: :delete, data: { confirm: "You sure?" }, class: 'ui red button' %>
+  <% end %>
+  <div class="ui comments">
+    <h3 class="ui dividing header">Comments</h3>
+    <% @responses.each do |response| %>
+      <div class="comment">
+        <div class="content">
+          <%= link_to response.user.name, user_path(response.user), class: 'author' %>
+          <div class="metadata">
+            <span class="date"><%= response.created_at %></span>
+          </div>
+          <div class="text"><%= response.content %></div>
+          <div class="actions">
+            <%= link_to '返信', new_recomment_path(:response_id => response.id, :post_id => @post.id), class: 'reply' %>
+            <% if current_user.id == response.user.id %>
+              <%= link_to '削除', response_path(response.user, :post_id => @post.id), method: :delete, data: { confirm: "You sure?" }, class: 'reply' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <div class="ui dropdown">
+      Comments <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item">
+          <div class="comments">
+            <div class="comment">
+            <% @recomments.each do |recomment| %>
+              <% if recomment == nil %>
+                <p>最初のコメントをしよう！</p>
+              <% else %>
+                <% if response.id == recomment.response_id %>
+                  <div class="content">
+                    <%= link_to recomment.user.name, user_path(recomment.user.id), class: 'author' %>
+                    <div class="metadata">
+                      <span class="date"><%= recomment.created_at %></span>
+                    </div>
+                    <div class="text">
+                      <%= recomment.content %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $('.ui.dropdown').dropdown();
+    </script>
+    <% end %>
+  </div>
+</div>

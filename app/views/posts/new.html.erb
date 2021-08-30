@@ -1,0 +1,27 @@
+<h3 class="header">新しい投稿</h3>
+<div class="ui form">
+  <%= form_with(model: @post, local: true) do |f| %>
+
+    <div class="six wide field">
+      <%= f.label :bandname, 'バンド名' %>
+      <%= f.text_field :bandname %>
+    </div>
+    
+    <div class="one wide field">
+      <%= f.label :member, 'メンバー数' %>
+      <%= f.number_field :member %>
+    </div>
+      
+    <div class="six wide field">
+      <%= f.label :part, '足りないパート' %>
+      <%= f.text_field :part %>
+    </div> 
+    
+    <div class="six wide field">
+      <%= f.label :remark, 'ひとこと' %>
+      <%= f.text_area :remark %>
+    </div>
+    
+    <%= f.submit '投稿', class: 'ui primary button' %>
+  <% end %>
+</div>

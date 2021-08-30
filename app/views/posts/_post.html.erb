@@ -1,0 +1,35 @@
+<% posts.each do |post| %>
+    <div class="ui segment">
+      <h2 class="ui left floated header"><%= post.bandname %></h2>
+      <div class="ui clearing divider"></div>
+        <table class="ui table">
+          <tbody>
+            <tr>
+              <td>バンド名</td>
+              <td><%= post.bandname %></td>
+            </tr>
+            <tr>
+              <td>メンバー数</td>
+              <td><%= post.member %></td>
+            </tr>
+            <tr>
+              <td>足りないパート</td>
+              <td><%= post.part %></td>
+            </tr>
+            <tr>
+              <td>ひとこと</td>
+              <td><%= post.remark %></td>
+            </tr>
+            <tr>
+              <td>作成者</td>
+              <td><%= link_to post.user.name, user_path(post.user) %></td>
+            </tr>
+          </tbody>
+        </table>
+      <%= link_to '詳細を見る', post_path(post), class: 'ui button' %>
+      <% if current_user.id == post.user.id %>
+        <%= link_to '編集する', edit_post_path(post), class: 'ui green button' %>
+        <%= link_to '削除する', post_path(post), method: :delete, data: { confirm: "You sure?" }, class: 'ui red button' %>
+      <% end %>
+    </div>
+    <% end %>
