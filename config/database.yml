@@ -14,8 +14,8 @@ development:
   encoding: utf8
   database: rails_tutorial
   pool: 5
-  username: Kenshin
-  password: Asama630hawk@
+  username: root
+  password: Asama630hawk
   host: localhost
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
