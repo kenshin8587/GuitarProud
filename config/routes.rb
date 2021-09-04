@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   root to: 'toppages#index'
   
   get 'signup', to: 'users#new'
-  resources :users, only: [:index, :show, :create, :edit, :update, :destroy]
+  resources :users, only: [:index, :show, :create, :edit, :update, :destroy] do
+    member do
+      get :followings
+      get :followers
+    end
+  end
   
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
@@ -15,4 +20,6 @@ Rails.application.routes.draw do
   resources :comments, only: [:new, :create, :destroy]
   
   resources :replies, only: [:new, :create, :destroy]
+
+  resources :relationships, only: [:create, :destroy]
 end

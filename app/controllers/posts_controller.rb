@@ -4,6 +4,7 @@ class PostsController < ApplicationController
   
   def show
     @post = Post.find(params[:id])
+    @user = User.find(@post.id)
     @comments = Comment.where(post_id: @post.id)
     @replies = Reply.all
   end

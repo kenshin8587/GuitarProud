@@ -25,11 +25,17 @@
         </tr>
       </tbody>
     </table>
-  <%= link_to 'コメントする', new_comment_path(:post_id => @post.id), class: 'ui button' %>
+  <% if @user.new_follow(current_user) && current_user.new_follow(@user) %>
+    <%= link_to 'コメントする', new_comment_path(:post_id => @post.id), class: 'ui button' %>
+  <% elsif current_user == @user %>
+    <%= link_to 'コメントする', new_comment_path(:post_id => @post.id), class: 'ui button' %>
+  <% end %>
   <% if current_user.id == @post.user.id %>
     <%= link_to '編集する', edit_post_path(@post), class: 'ui green button' %>
     <%= link_to '削除する', post_path(@post), method: :delete, data: { confirm: "You sure?" }, class: 'ui red button' %>
   <% end %>
+
+  <% if @user.new_follow(current_user) && current_user.new_follow(@user) %>
   <div class="ui comments">
     <h3 class="ui dividing header">Comments</h3>
     <% @comments.each do |comment| %>
@@ -81,4 +87,58 @@
     </script>
     <% end %>
   </div>
+  <% elsif current_user == @user %>
+  <div class="ui comments">
+    <h3 class="ui dividing header">Comments</h3>
+    <% @comments.each do |comment| %>
+      <div class="comment">
+        <div class="content">
+          <%= link_to comment.user.name, user_path(comment.user), class: 'author' %>
+          <div class="metadata">
+            <span class="date"><%= comment.created_at %></span>
+          </div>
+          <div class="text"><%= comment.content %></div>
+          <div class="actions">
+            <%= link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id), class: 'reply' %>
+            <% if current_user.id == comment.user.id %>
+              <%= link_to '削除', comment_path(comment.user, :post_id => @post.id), method: :delete, data: { confirm: "You sure?" }, class: 'reply' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <div class="ui dropdown">
+      Comments <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item">
+          <div class="comments">
+            <div class="comment">
+            <% @replies.each do |reply| %>
+              <% if reply == nil %>
+                <p>最初のコメントをしよう！</p>
+              <% else %>
+                <% if comment.id == reply.comment_id %>
+                  <div class="content">
+                    <%= link_to reply.user.name, user_path(reply.user.id), class: 'author' %>
+                    <div class="metadata">
+                      <span class="date"><%= reply.created_at %></span>
+                    </div>
+                    <div class="text">
+                      <%= reply.content %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $('.ui.dropdown').dropdown();
+    </script>
+    <% end %>
+  </div>
+  <% end %>
+
 </div>
