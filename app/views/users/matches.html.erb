@@ -1,0 +1,20 @@
+<% if @users.any? %>  
+  <table class="ui red table">
+    <thead>
+      <tr>
+        <th>プロフィール画像</th>
+        <th>名前</th>
+      </tr>
+    </thead>
+    <tbody>  
+      <% @users.each do |user| %>
+        <% if user.new_follow(current_user) && current_user.new_follow(user) %>
+          <tr>
+            <td><img class="ui avatar image" src="#"></td>
+            <td><%= link_to user.name, user_path(user) %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

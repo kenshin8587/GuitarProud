@@ -48,6 +48,14 @@ class UsersController < ApplicationController
     flash[:success] = 'アカウントが削除されました'
     redirect_to root_url
   end
+
+  def followers
+    @users = User.all
+  end
+
+  def matches
+    @users = User.all
+  end
   
   private
   

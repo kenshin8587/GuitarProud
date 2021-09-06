@@ -1,4 +1,6 @@
 <% if logged_in? %>
+<div class="ui grid">
+<div class="ten wide column">
 <div class="ui mini form">
   <%= form_tag(root_url, method: 'get') do %>
   
@@ -14,9 +16,12 @@
     
     <%= submit_tag '検索', class: 'mini ui button' %>
   <% end %>
+
 </div>
-  <h2 class="header">バンド一覧</h2>
-  <%= link_to '新しい投稿', newpost_path, class: 'ui primary button' %>
+</div>
+<div class="six wide column">
+</div>
+</div>
   <%= render 'posts/post', posts: @posts %>
 <% else %>
   <div class="ui segment">

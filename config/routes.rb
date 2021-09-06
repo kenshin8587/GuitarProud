@@ -4,9 +4,10 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   resources :users, only: [:index, :show, :create, :edit, :update, :destroy] do
-    member do
+    collection do
       get :followings
       get :followers
+      get :matches
     end
   end
   
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
   get 'newpost', to: 'posts#new'
   resources :posts, only: [:show, :create, :edit, :update, :destroy]
   
-  resources :comments, only: [:new, :create, :destroy]
+  resources :comments, only: [:create, :destroy]
   
   resources :replies, only: [:new, :create, :destroy]
 

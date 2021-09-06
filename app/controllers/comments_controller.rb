@@ -1,16 +1,16 @@
 class CommentsController < ApplicationController
   before_action :require_user_logged_in
   
-  def new
-    @comment = current_user.comments.build
-    @post = Post.find(params[:post_id])
-  end
+  #def new
+    #@comment = current_user.comments.build
+    #@post = Post.find(params[:post_id])
+  #end
 
   def create
     @post = Post.find(params[:post_id])
-    @comment = current_user.comments.build(comment_params)
+    @comment_new = current_user.comments.build(comment_params)
     
-    if @comment.save
+    if @comment_new.save
       flash[:success] = 'コメントしました'
       redirect_to post_path(params[:post_id])
     else

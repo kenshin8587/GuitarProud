@@ -2,13 +2,12 @@
   <div class="ui inverted secondary menu">
     <div class="ui sizer vertical segment"><%= link_to 'GuitarProud', root_url, class: 'ui red large header' %></div>
     <% if logged_in? %>
-      <%= link_to 'ユーザー', users_path, class: 'item' %>
       <div class="ui dropdown item">
         <%= current_user.name %>
         <i class="dropdown icon"></i>
         <div class="menu">
-          <%= link_to '自分のプロフィール', user_path(current_user), class: 'item' %>
-          <%= link_to 'プロフィールの編集', edit_user_path(current_user), class: 'item' %>
+          <%= link_to '自分の投稿', user_path(current_user), class: 'item' %>
+          <%= link_to 'プロフィール', edit_user_path(current_user), class: 'item' %>
           <div class="divider"></div>
           <%= link_to 'アカウント削除', user_path(current_user), method: :delete, data: { confirm: "you sure?" }, class: 'item' %>
         </div>
@@ -18,6 +17,9 @@
       </script>
       <%= link_to 'ログアウト', logout_path, method: :delete, class: 'item' %>
       <div class="right menu">
+        <%= link_to '全てのユーザー', users_path, class: 'item' %>
+        <%= link_to 'あなたに興味を持っているユーザー', followers_users_path, class: 'item' %>
+        <%= link_to 'マッチングしたユーザー', matches_users_path, class: 'item' %>
         <%= link_to '新しい投稿', newpost_path, class: 'item' %>
       </div>
     <% else %>
