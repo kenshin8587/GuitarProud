@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_03_183427) do
+ActiveRecord::Schema.define(version: 2021_09_06_235956) do
 
   create_table "comments", charset: "utf8", force: :cascade do |t|
     t.string "content"
@@ -20,6 +20,25 @@ ActiveRecord::Schema.define(version: 2021_09_03_183427) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "entries", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_entries_on_room_id"
+    t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
+  create_table "messages", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "content"
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "posts", charset: "utf8", force: :cascade do |t|
@@ -55,6 +74,11 @@ ActiveRecord::Schema.define(version: 2021_09_03_183427) do
     t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
+  create_table "rooms", charset: "utf8", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -65,6 +89,10 @@ ActiveRecord::Schema.define(version: 2021_09_03_183427) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "entries", "rooms"
+  add_foreign_key "entries", "users"
+  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "relationships", "users"
   add_foreign_key "relationships", "users", column: "follow_id"

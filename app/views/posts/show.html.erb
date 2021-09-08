@@ -1,33 +1,33 @@
 <div class="ui text container">
   <h2 class="ui left floated header"><%= @post.bandname %></h2>
   <div class="ui clearing divider"></div>
-    <table class="ui blue table">
+    <table class="table">
       <tbody>
         <tr>
-          <td>バンド名</td>
-          <td><%= @post.bandname %></td>
+          <td scope="col">バンド名</td>
+          <td scope="col"><%= @post.bandname %></td>
         </tr>
         <tr>
-          <td>メンバー数</td>
-          <td><%= @post.member %></td>
+          <td scope="col">メンバー数</td>
+          <td scope="col"><%= @post.member %></td>
         </tr>
         <tr>
-          <td>足りないパート</td>
-          <td><%= @post.part %></td>
+          <td scope="col">足りないパート</td>
+          <td scope="col"><%= @post.part %></td>
         </tr>
         <tr>
-          <td>ひとこと</td>
-          <td><%= @post.remark %></td>
+          <td scope="col">ひとこと</td>
+          <td scope="col"><%= @post.remark %></td>
         </tr>
         <tr>
-          <td>作成者</td>
-          <td><%= link_to @post.user.name, user_path(@post.user) %></td>
+          <td scope="col">作成者</td>
+          <td scope="col"><%= link_to @post.user.name, user_path(@post.user) %></td>
         </tr>
       </tbody>
     </table>
   <% if current_user.id == @post.user.id %>
-    <%= link_to '編集する', edit_post_path(@post), class: 'ui green button' %>
-    <%= link_to '削除する', post_path(@post), method: :delete, data: { confirm: "You sure?" }, class: 'ui red button' %>
+    <%= link_to '編集する', edit_post_path(@post), class: 'btn btn-outline-success btn-sm' %>
+    <%= link_to '削除する', post_path(@post), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-outline-danger btn-sm' %>
   <% end %>
 
   <% if @user.new_follow(current_user) && current_user.new_follow(@user) %>
@@ -85,8 +85,8 @@
   <div class="ui reply form">
   <%= form_with(model: @comment_new, local: true) do |f| %>
     <%= hidden_field_tag :post_id, @post.id %>
-    <div class="six wide field">
-      <%= f.text_area :content %>
+    <div class="field">
+      <%= f.text_field :content %>
     </div>
     
     
@@ -149,8 +149,8 @@
   <div class="ui reply form">
   <%= form_with(model: @comment_new, local: true) do |f| %>
     <%= hidden_field_tag :post_id, @post.id %>
-    <div class="six wide field">
-      <%= f.text_area :content %>
+    <div class="field">
+      <%= f.text_field :content %>
     </div>
     
     

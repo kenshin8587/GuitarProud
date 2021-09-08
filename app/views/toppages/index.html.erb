@@ -1,28 +1,24 @@
 <% if logged_in? %>
-<div class="ui grid">
-<div class="ten wide column">
-<div class="ui mini form">
   <%= form_tag(root_url, method: 'get') do %>
-  
-    <div class="six wide field">
-      <%= label_tag :bandname, 'バンド名' %>
-      <%= text_field_tag :bandname, params[:bandname] %>
+    <div class="row mb-1">
+      <div class="col-md-6">
+      <%= text_field_tag :bandname, params[:bandname], placeholder: 'バンド名', class: 'form-control form-control-sm' %>
+      </div>
+      <div class="offset-md-6"></div>
     </div>
     
-    <div class="six wide field">
-      <%= label_tag :part, '足りないパート' %>
-      <%= text_field_tag :part, params[:part] %>
+    <div class="row">
+      <div class="col-md-6">
+      <%= text_field_tag :part, params[:part], placeholder: '足りないパート', class: 'form-control form-control-sm' %>
+      </div>
+      <div class="offset-md-6"></div>
     </div>
-    
-    <%= submit_tag '検索', class: 'mini ui button' %>
+      
+    <%= submit_tag '検索', class: 'btn btn-warning btn-sm mt-1 mb-2' %>
   <% end %>
-
-</div>
-</div>
-<div class="six wide column">
-</div>
-</div>
-  <%= render 'posts/post', posts: @posts %>
+  <div class="row">
+    <%= render 'posts/post', posts: @posts %>
+  </div>
 <% else %>
   <div class="ui segment">
     <p class="ui text large">Welcome to GuitarProud!</p>

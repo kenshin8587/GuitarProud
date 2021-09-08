@@ -1,68 +1,24 @@
-<div class="ui cards">
 <% posts.each do |post| %>
-  <div class="ui card">
-    <div class="content">
-      <div class="header"><%= post.bandname %></div>
+  <div class="col-md-4 mt-2 mb-2">
+  <div class="card" style="width: 23rem;">
+    <div class="card-body">
+      <p>投稿者：　<%= link_to post.user.name, user_path(post.user) %></p>
+      <p class="card-text"><%= post.remark %></p>
     </div>
-    <div class="content">
-      <h2 class="ui sub header">バンド名</h2>
-      <div class="ui small feed">
-        <div class="event">
-          <div class="content">
-            <div class="summary">
-              <p><%= post.bandname %></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h2 class="ui sub header">メンバー数</h2>
-      <div class="ui small feed">
-        <div class="event">
-          <div class="content">
-            <div class="summary">
-              <p><%= post.part %></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h2 class="ui sub header">足りないパート</h2>
-      <div class="ui small feed">
-        <div class="event">
-          <div class="content">
-            <div class="summary">
-              <p><%= post.part %></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h2 class="ui sub header">ひとこと</h2>
-      <div class="ui small feed">
-        <div class="event">
-          <div class="content">
-            <div class="summary">
-              <p><%= post.remark %></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h2 class="ui sub header">投稿者</h2>
-      <div class="ui small feed">
-        <div class="event">
-          <div class="content">
-            <div class="summary">
-              <p><%= link_to post.user.name, user_path(post.user) %></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="extra content">
-      <%= link_to '詳細を見る', post_path(post), class: 'ui mini button' %>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">バンド名：　<%= post.bandname %></li>
+      <li class="list-group-item">メンバー数：　<%= post.member %></li>
+      <li class="list-group-item">足りないパート：　<%= post.part %></li>
+    </ul>
+    
+    <div class="card-body">
+      <%= link_to '詳細を見る', post_path(post), class: 'btn btn-outline-secondary btn-sm' %>
       <% if current_user.id == post.user.id %>
-        <%= link_to '編集する', edit_post_path(post), class: 'ui green mini button' %>
-        <%= link_to '削除する', post_path(post), method: :delete, data: { confirm: "You sure?" }, class: 'ui red mini button' %>
+        <%= link_to '編集する', edit_post_path(post), class: 'btn btn-outline-success btn-sm' %>
+        <%= link_to '削除する', post_path(post), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-outline-danger btn-sm' %>
       <% end %>
     </div>
   </div>
+  </div>
 <% end %>
-</div>

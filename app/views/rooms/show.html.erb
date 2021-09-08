@@ -1,0 +1,34 @@
+<div class="chat-room">
+  <div class="messages__message">
+    <% if @messages.present? %>
+      <% @messages.each do |message| %>
+        <div class="chat-box">
+          <div class="chat-text">
+            <% if message.user.id == current_user.id %>
+              <div class="ui violet inverted segment">
+                <p class="messages__message__list--content"><%= message.content %></p>
+                <p class="messages__message__list--date"><%= message.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+              </div>
+            <% else %>
+              <div class="ui grey inverted segment">
+                <p class="messages__message__list--content"><%= message.content %></p>
+                <p class="messages__message__list--date"><%= message.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="posts">
+    <%= form_with(model: @message, local: true, id: 'messages__new__form') do |f| %>
+      <div class="messages__new__form">
+        <%= f.hidden_field :room_id, value: @room.id %>
+        <span class="messages__new__form__input">
+          <%= f.text_field :content, placeholder: "メッセージを入力してください", id: 'messages__new__form__input--area' %>
+        </span>
+      </div>
+      <%= f.submit "送信する", id: 'messages__btn' %>
+    <% end %>
+  </div>
+</div>
