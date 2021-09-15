@@ -1,20 +1,30 @@
 class RepliesController < ApplicationController
   before_action :require_user_logged_in
 
-  def new
+  def show
     @comment = Comment.find(params[:comment_id])
-    @reply = current_user.replies.build
+    #@comment = Comment.find(:comment_id)
+    @reply = Reply.where(comment_id: @comment.id)
+    @reply_new = current_user.replies.build
+    @comment = Comment.find(params[:comment_id])
     @post = Post.find(params[:post_id])
   end
+
+  #def new
+    #@reply_new = current_user.replies.build
+    #@comment = Comment.find(params[:comment_id])
+    #@post = Post.find(params[:post_id])
+  #end
 
   def create
     @comment = Comment.find(params[:comment_id])
     @post = Post.find(params[:post_id])
-    @reply = current_user.replies.build(reply_params)
+    @reply_new = current_user.replies.build(reply_params)
+    #@reply = Reply.where(comment_id: @comment.id)
     
-    if @reply.save
+    if @reply_new.save
       flash[:success] = '返信しました'
-      redirect_to post_path(params[:post_id])
+      redirect_to request.referer
     else
       flash.now[:error] = '返信できませんでした'
       render :new

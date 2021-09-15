@@ -1,27 +1,48 @@
 <h3 class="header">新しい投稿</h3>
-<div class="ui form">
   <%= form_with(model: @post, local: true) do |f| %>
 
-    <div class="six wide field">
-      <%= f.label :bandname, 'バンド名' %>
-      <%= f.text_field :bandname %>
+    <div class="row g-3 align-items-center  mt-2 mb-2">
+      <div class="col-md-3">
+        <%= f.label :bandname, 'バンド名' %>
+      </div>
+      <div class="col-md-6">
+        <%= f.text_field :bandname, class: 'form-control' %>
+      </div>
+      <div class="offset-md-3"></div>
     </div>
     
-    <div class="one wide field">
-      <%= f.label :member, 'メンバー数' %>
-      <%= f.number_field :member %>
+    <div class="row g-3 align-items-center mb-2">
+      <div class="col-md-3">
+        <%= f.label :member, 'メンバー数' %>
+      </div>
+      <div class="col-md-3">
+        <%= f.number_field :member %>
+      </div>
+      <div class="offset-md-6"></div>
     </div>
       
-    <div class="six wide field">
-      <%= f.label :part, '足りないパート' %>
-      <%= f.text_field :part %>
-    </div> 
-    
-    <div class="six wide field">
-      <%= f.label :remark, 'ひとこと' %>
-      <%= f.text_area :remark %>
+    <div class="row g-3 align-items-center mb-2">
+      <div class="col-md-3">
+        <%= f.label :part, '足りないパート' %>
+      </div>
+      <div class="col-md-6">
+        <%= f.text_field :part, class: 'form-control' %>
+      </div> 
+      <div class="offset-md-3"></div>
     </div>
     
-    <%= f.submit '投稿', class: 'ui primary button' %>
+    <div class="row g-3 align-items-center mb-5">
+      <div class="col-md-3">
+        <%= f.label :remark, 'ひとこと' %>
+      </div>
+      <div class="col-md-7">
+        <%= f.text_area :remark, class: 'form-control' %>
+      </div>
+      <div class="offset-md-2"></div>
+    </div>
+    
+    
+    <%= f.submit '投稿', class: 'btn btn-primary' %>
+   
   <% end %>
 </div>

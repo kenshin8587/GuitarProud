@@ -1,34 +1,31 @@
-<div class="chat-room">
-  <div class="messages__message">
+<div class="chat">
+  <div class="chat bg-light p-4 mb-2">    
     <% if @messages.present? %>
       <% @messages.each do |message| %>
-        <div class="chat-box">
-          <div class="chat-text">
-            <% if message.user.id == current_user.id %>
-              <div class="ui violet inverted segment">
-                <p class="messages__message__list--content"><%= message.content %></p>
-                <p class="messages__message__list--date"><%= message.created_at.strftime("%Y-%m-%d %H:%M") %></p>
-              </div>
-            <% else %>
-              <div class="ui grey inverted segment">
-                <p class="messages__message__list--content"><%= message.content %></p>
-                <p class="messages__message__list--date"><%= message.created_at.strftime("%Y-%m-%d %H:%M") %></p>
-              </div>
-            <% end %>
+        <% if message.user.id == current_user.id %>
+          <div class="message d-flex flex-row-reverse align-items-start mb-4">
+          <p class="message-text p-2 ms-2 mb-0 bg-warning"><%= message.content %></p>
+          <!--<p class="messages__message__list--date"><%= message.created_at.strftime("%Y-%m-%d %H:%M") %></p>-->
           </div>
-        </div>
+        <% else %>
+          <div class="message d-flex flex-row align-items-start mb-4">
+          <p class="message-text p-2 me-2 mb-0 bg-info"><%= message.content %></p>
+          <!--<p class="messages__message__list--date"><%= message.created_at.strftime("%Y-%m-%d %H:%M") %></p>-->
+          </div>
+        <% end %>
       <% end %>
     <% end %>
   </div>
-  <div class="posts">
-    <%= form_with(model: @message, local: true, id: 'messages__new__form') do |f| %>
-      <div class="messages__new__form">
+
+    <%= form_with(model: @message, local: true) do |f| %>
+      <div class="row">
+      <div class="col-8">
         <%= f.hidden_field :room_id, value: @room.id %>
-        <span class="messages__new__form__input">
-          <%= f.text_field :content, placeholder: "メッセージを入力してください", id: 'messages__new__form__input--area' %>
-        </span>
+        <%= f.text_field :content, placeholder: "メッセージを入力...", class: 'form-control' %>
       </div>
-      <%= f.submit "送信する", id: 'messages__btn' %>
+      <div class="col-4">
+        <%= f.submit "送信する", class: 'btn btn-success btn-sm' %>
+      </div>
+      </div>
     <% end %>
-  </div>
 </div>

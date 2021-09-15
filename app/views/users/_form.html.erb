@@ -1,31 +1,57 @@
 <%= form_with(model: user, local: true) do |f| %>
-    <%= render 'layouts/error_messages', model: f.object %>
-    <div class="ui form">
-  
-      <div class="field">
-        <%= f.label :name, '名前' %>
-        <%= f.text_field :name %>
-      </div>
-        
-      <div class="field">
-        <%= f.label :email, 'メールアドレス' %>
-        <%= f.email_field :email %>
-      </div>
-      
-      <div class="field">
-        <%= f.label :password, 'パスワード' %>
-        <%= f.password_field :password %>
-      </div>
-        
-      <div class="field">
-        <%= f.label :password_confirmation, 'パスワード再入力' %>
-        <%= f.password_field :password_confirmation %>
-      </div>
-        
-      <% if logged_in? %>  
-        <%= f.submit 'プロフィールを変更する', class: 'ui green button' %>
-      <% else %>
-        <%= f.submit 'アカウントを作成する', class: 'ui primary button' %>
-      <% end %>
+  <%= render 'layouts/error_messages', model: f.object %>
+
+  <div class="row mb-2">
+    <div class="col-md-3">
+      <%= f.label :name, '名前' %>
     </div>
-  <% end %>
+    <div class="col-md-6">
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="offset-md-3"></div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col-md-3">
+      <%= f.label :email, 'メールアドレス' %>
+    </div>
+    <div class="col-md-6">
+      <%= f.email_field :email, class: 'form-control' %>
+    </div>
+    <div class="offset-md-3"></div>
+  </div>
+      
+  <div class="row mb-2">
+    <div class="col-md-3">
+      <%= f.label :password, 'パスワード' %>
+    </div>
+    <div class="col-md-6">
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
+    <div class="offset-md-3"></div>
+  </div>
+        
+  <div class="row mb-5">
+    <div class="col-md-3">
+      <%= f.label :password_confirmation, 'パスワード再入力' %>
+    </div>
+    <div class="col-md-6">
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+    <div class="offset-md-3"></div>
+  </div>
+        
+  <div class="row">
+    <% if logged_in? %>
+      <div class="col-md-6">  
+        <%= f.submit 'プロフィールを変更する', class: 'btn btn-success' %>
+      </div>
+      <div class="offset-md-6"></div>
+    <% else %>
+      <div class="col-md-6">
+        <%= f.submit 'アカウントを作成する', class: 'btn btn-success' %>
+      </div>
+      <div class="offset-md-6"></div>
+    <% end %>
+  </div>
+<% end %>

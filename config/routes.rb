@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   
   resources :comments, only: [:create, :destroy]
   
-  resources :replies, only: [:new, :create, :destroy]
+  resources :replies, only: [:show, :create, :destroy]
 
   resources :relationships, only: [:create, :destroy]
 

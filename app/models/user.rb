@@ -9,12 +9,12 @@ class User < ApplicationRecord
   has_many :replies, dependent: :destroy
 
   has_many :relationships, dependent: :destroy
-  has_many :followings, through: :relationships, source: :follow
+  has_many :followings, through: :relationships, source: :follow, dependent: :destroy
   has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id', dependent: :destroy
-  has_many :followers, through: :reverses_of_relationship, source: :user
+  has_many :followers, through: :reverses_of_relationship, source: :user, dependent: :destroy
 
   has_many :messages, dependent: :destroy
-  has_many :rooms, through: :entries
+  has_many :rooms, through: :entries, dependent: :destroy
   has_many :entries, dependent: :destroy
 
   def follow(other_user)

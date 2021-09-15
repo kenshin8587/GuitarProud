@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     @user = User.find(@post.id)
     @comment_new = current_user.comments.build
     @comments = Comment.where(post_id: @post.id)
-    @replies = Reply.all
+    #@replies = Reply.all
   end
   
   def new

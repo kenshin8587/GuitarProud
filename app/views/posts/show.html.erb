@@ -1,163 +1,108 @@
-<div class="ui text container">
-  <h2 class="ui left floated header"><%= @post.bandname %></h2>
-  <div class="ui clearing divider"></div>
-    <table class="table">
-      <tbody>
-        <tr>
-          <td scope="col">バンド名</td>
-          <td scope="col"><%= @post.bandname %></td>
-        </tr>
-        <tr>
-          <td scope="col">メンバー数</td>
-          <td scope="col"><%= @post.member %></td>
-        </tr>
-        <tr>
-          <td scope="col">足りないパート</td>
-          <td scope="col"><%= @post.part %></td>
-        </tr>
-        <tr>
-          <td scope="col">ひとこと</td>
-          <td scope="col"><%= @post.remark %></td>
-        </tr>
-        <tr>
-          <td scope="col">作成者</td>
-          <td scope="col"><%= link_to @post.user.name, user_path(@post.user) %></td>
-        </tr>
-      </tbody>
-    </table>
-  <% if current_user.id == @post.user.id %>
-    <%= link_to '編集する', edit_post_path(@post), class: 'btn btn-outline-success btn-sm' %>
-    <%= link_to '削除する', post_path(@post), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-outline-danger btn-sm' %>
-  <% end %>
+<table class="table table-success">
+  <tbody>
+    <tr>
+      <td scope="col">バンド名</td>
+      <td scope="col"><%= @post.bandname %></td>
+    </tr>
+    <tr>
+      <td scope="col">メンバー数</td>
+      <td scope="col"><%= @post.member %></td>
+    </tr>
+    <tr>
+      <td scope="col">足りないパート</td>
+      <td scope="col"><%= @post.part %></td>
+    </tr>
+    <tr>
+      <td scope="col">ひとこと</td>
+      <td scope="col"><%= @post.remark %></td>
+    </tr>
+    <tr>
+      <td scope="col">作成者</td>
+      <td scope="col"><%= link_to @post.user.name, user_path(@post.user) %></td>
+    </tr>
+  </tbody>
+</table>
+<% if current_user.id == @post.user.id %>
+  <%= link_to '編集する', edit_post_path(@post), class: 'btn btn-outline-success btn-sm' %>
+  <%= link_to '削除する', post_path(@post), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-outline-danger btn-sm' %>
+<% end %>
 
-  <% if @user.new_follow(current_user) && current_user.new_follow(@user) %>
-  <div class="ui comments">
-    <h3 class="ui dividing header">グループトーク</h3>
+<% if @user.new_follow(current_user) && current_user.new_follow(@user) %>
+  <h5>グループトーク</h5>
     <% @comments.each do |comment| %>
-      <div class="comment">
-        <div class="content">
-          <%= link_to comment.user.name, user_path(comment.user), class: 'author' %>
-          <div class="metadata">
-            <span class="date"><%= comment.created_at %></span>
-          </div>
-          <div class="text"><%= comment.content %></div>
-          <div class="actions">
-            <%= link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id), class: 'reply' %>
-            <% if current_user.id == comment.user.id %>
-              <%= link_to '削除', comment_path(comment.user, :post_id => @post.id), method: :delete, data: { confirm: "You sure?" }, class: 'reply' %>
-            <% end %>
-          </div>
+      <div class="card border-success mb-3">
+        <div class="card-body text-success">
+          <%# comment.created_at %>
+          <div class="card-text"><%= comment.content %></div>（<%= link_to comment.user.name, user_path(comment.user), class: 'author' %>）
+          <%# link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id) %><%= comment.id %>
+          <% if current_user.id == comment.user.id %>
+            <%= link_to '削除', comment_path(comment.user, :post_id => @post.id), method: :delete, data: { confirm: "You sure?" } %>
+          <% end %>
         </div>
-      </div>
-    <div class="ui dropdown">
-      Comments <i class="dropdown icon"></i>
-      <div class="menu">
-        <div class="item">
-          <div class="comments">
-            <div class="comment">
-            <% @replies.each do |reply| %>
-              <% if reply == nil %>
-                <p>最初のコメントをしよう！</p>
-              <% else %>
-                <% if comment.id == reply.comment_id %>
-                  <div class="content">
-                    <%= link_to reply.user.name, user_path(reply.user.id), class: 'author' %>
-                    <div class="metadata">
-                      <span class="date"><%= reply.created_at %></span>
-                    </div>
-                    <div class="text">
-                      <%= reply.content %>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
-            </div>
+        <% if comment.replies.present? %>
+          <div class="card-footer bg-transparent border-success">
+            <%= link_to '返信を見る', reply_path(comment_id: comment.id, post_id: @post.id) %>
           </div>
-        </div>
+        <% else %>
+          <div class="card-footer bg-transparent border-success">
+            <%= link_to '最初の返信する', reply_path(comment_id: comment.id, post_id: @post.id) %>
+          </div>
+        <% end %>
       </div>
-    </div>
-    <script>
-      $('.ui.dropdown').dropdown();
-    </script>
     <% end %>
   </div>
-  <div class="ui reply form">
+
   <%= form_with(model: @comment_new, local: true) do |f| %>
     <%= hidden_field_tag :post_id, @post.id %>
-    <div class="field">
-      <%= f.text_field :content %>
-    </div>
-    
-    
-    <%= f.submit '送信する', class: 'ui primary button' %>
-  
-  <% end %>
-  </div>  
-  <% elsif current_user == @user %>
-  <div class="ui comments">
-    <h3 class="ui dividing header">グループトーク</h3>
-    <% @comments.each do |comment| %>
-      <div class="comment">
-        <div class="content">
-          <%= link_to comment.user.name, user_path(comment.user), class: 'author' %>
-          <div class="metadata">
-            <span class="date"><%= comment.created_at %></span>
-          </div>
-          <div class="text"><%= comment.content %></div>
-          <div class="actions">
-            <%= link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id), class: 'reply' %>
-            <% if current_user.id == comment.user.id %>
-              <%= link_to '削除', comment_path(comment.user, :post_id => @post.id), method: :delete, data: { confirm: "You sure?" }, class: 'reply' %>
-            <% end %>
-          </div>
+    <div class="row">
+      <div class="offset-md-1"></div>
+        <div class="col-md-6">
+          <%= f.text_field :content, class: 'form-control', placeholder: 'コメントを入力...' %>
         </div>
-      </div>
-    <div class="ui dropdown">
-      コメントを見る <i class="dropdown icon"></i>
-      <div class="menu">
-        <div class="item">
-          <div class="comments">
-            <div class="comment">
-            <% @replies.each do |reply| %>
-              <% if reply == nil %>
-                <p>最初のコメントをしよう！</p>
-              <% else %>
-                <% if comment.id == reply.comment_id %>
-                  <div class="content">
-                    <%= link_to reply.user.name, user_path(reply.user.id), class: 'author' %>
-                    <div class="metadata">
-                      <span class="date"><%= reply.created_at %></span>
-                    </div>
-                    <div class="text">
-                      <%= reply.content %>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
-            </div>
-          </div>
+        <div class="col-md-5">
+          <%= f.submit '送信する', class: 'btn btn-success btn-sm' %>
         </div>
       </div>
     </div>
-    <script>
-      $('.ui.dropdown').dropdown();
-    </script>
-    <% end %>
-  </div>
-  <div class="ui reply form">
-  <%= form_with(model: @comment_new, local: true) do |f| %>
-    <%= hidden_field_tag :post_id, @post.id %>
-    <div class="field">
-      <%= f.text_field :content %>
-    </div>
-    
-    
-    <%= f.submit '送信する', class: 'ui primary button' %>
-  
-  <% end %>
-  </div>
   <% end %>
 
-</div>
+<% elsif current_user == @user %>
+  <h5>グループトーク</h5>
+  <% @comments.each do |comment| %>
+    <div class="card border-success mb-3">
+      <div class="card-body text-success">
+        <%# comment.created_at %>
+        <div class="card-text"><%= comment.content %></div>（<%= link_to comment.user.name, user_path(comment.user), class: 'author' %>）
+        <%# link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id) %><%= comment.id %>
+        <% if current_user.id == comment.user.id %>
+          <%= link_to '削除', comment_path(comment.user, :post_id => @post.id), method: :delete, data: { confirm: "You sure?" } %>
+        <% end %>
+      </div>
+      <% if comment.replies.present? %>
+        <div class="card-footer bg-transparent border-success">
+          <%= link_to '返信を見る', reply_path(comment_id: comment.id, post_id: @post.id) %>
+        </div>
+      <% else %>
+        <div class="card-footer bg-transparent border-success">
+          <%= link_to '最初の返信する', reply_path(comment_id: comment.id, post_id: @post.id) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
+
+  <%= form_with(model: @comment_new, local: true) do |f| %>
+    <%= hidden_field_tag :post_id, @post.id %>
+    <div class="row">
+      <div class="offset-md-1"></div>
+        <div class="col-md-6">
+          <%= f.text_field :content, class: 'form-control', placeholder: 'コメントを入力...' %>
+        </div>
+        <div class="col-md-5">
+          <%= f.submit '送信する', class: 'btn btn-success btn-sm' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+<% end %>

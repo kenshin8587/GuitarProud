@@ -1,22 +1,30 @@
-<h1><%= @user.name %> の投稿</h1>
-<h2 class="header">バンド一覧</h2>
-<% if current_user.id == @user.id %>
-  <%= link_to '新しい投稿', newpost_path, class: 'ui primary button' %>
-<% end %>
+<div class="row">
+<div class="col">
+<h2><%= @user.name %></h2>
+</div>
+<div class="col">
 <%= render 'relationships/follow_button', user: @user %>
+</div>
+<div class="col">
 <% unless @user.id == current_user.id %>
   <% if current_user.new_follow(@user) && @user.new_follow(current_user) %>
     <% if @exist_room == true %>
-      <%= link_to 'DM', room_path(@roomId), class: 'circular ui mini blue button' %>
+      <%= link_to 'DM', room_path(@roomId), class: 'btn btn-info btn-sm' %>
     </i>
     <% else %>
       <%= form_with(model: @room, local: true) do |f| %>
         <%= fields_for @entry do |e| %>
           <%= e.hidden_field :user_id, value: @user.id %>
         <% end %>
-        <%= f.submit 'DM', class: 'circular ui mini blue button' %>
+        <%= f.submit 'DM', class: 'btn btn-info btn-sm' %>
       <% end %>
     <% end %>
   <% end %>
 <% end %>
-<%= render 'posts/post', posts: @posts %>
+</div>
+<div class="offset-8"></div>
+</div>
+
+<div class="row">
+  <%= render 'posts/post', posts: @posts %>
+</div>
