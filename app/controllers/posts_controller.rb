@@ -21,7 +21,7 @@ class PostsController < ApplicationController
       flash[:success] = '投稿しました'
       redirect_to root_url
     else
-      flash.now[:error] = '投稿できませんでした'
+      flash.now[:danger] = '投稿できませんでした'
       render :new
     end
     
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
       flash[:success] = '編集しました'
       redirect_to root_url
     else
-      flash.now[:error] = '編集できませんせした'
+      flash.now[:danger] = '編集できませんせした'
       render :edit
     end
     

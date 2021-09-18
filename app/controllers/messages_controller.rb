@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
         #format.json
       #end
     else
-      flash[:error] = "メッセージ送信に失敗しました。"
+      flash[:danger] = "メッセージ送信に失敗しました。"
     end
     redirect_to room_path(@message.room_id)
   end

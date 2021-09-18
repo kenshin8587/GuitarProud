@@ -38,7 +38,7 @@ class UsersController < ApplicationController
       flash[:success] = 'アカウントが作成されました'
       redirect_to login_path
     else
-      flash.now[:error] = 'アカウント作成に失敗しました'
+      flash.now[:danger] = 'アカウント作成に失敗しました'
       render :new
     end
   end
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
       flash[:success] = 'プロフィールを編集しました'
       redirect_to @user
     else
-      flash.now[:error] = '編集できませんでした'
+      flash.now[:danger] = '編集できませんでした'
       render :edit
     end
   end

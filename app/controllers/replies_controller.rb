@@ -26,7 +26,7 @@ class RepliesController < ApplicationController
       flash[:success] = '返信しました'
       redirect_to request.referer
     else
-      flash.now[:error] = '返信できませんでした'
+      flash.now[:danger] = '返信できませんでした'
       render :new
     end
   end

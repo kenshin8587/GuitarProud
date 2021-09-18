@@ -28,13 +28,13 @@
 <% end %>
 
 <% if @user.new_follow(current_user) && current_user.new_follow(@user) %>
-  <h5>グループトーク</h5>
+  <h5 class="mt-5">グループトーク</h5>
     <% @comments.each do |comment| %>
       <div class="card border-success mb-3">
         <div class="card-body text-success">
           <%# comment.created_at %>
           <div class="card-text"><%= comment.content %></div>（<%= link_to comment.user.name, user_path(comment.user), class: 'author' %>）
-          <%# link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id) %><%= comment.id %>
+          <%# link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id) %>
           <% if current_user.id == comment.user.id %>
             <%= link_to '削除', comment_path(comment.user, :post_id => @post.id), method: :delete, data: { confirm: "You sure?" } %>
           <% end %>
@@ -54,7 +54,7 @@
 
   <%= form_with(model: @comment_new, local: true) do |f| %>
     <%= hidden_field_tag :post_id, @post.id %>
-    <div class="row">
+    <div class="row ml-1 mr-1">
       <div class="offset-md-1"></div>
         <div class="col-md-6">
           <%= f.text_field :content, class: 'form-control', placeholder: 'コメントを入力...' %>
@@ -67,13 +67,13 @@
   <% end %>
 
 <% elsif current_user == @user %>
-  <h5>グループトーク</h5>
+  <h5 class="mt-5">グループトーク</h5>
   <% @comments.each do |comment| %>
     <div class="card border-success mb-3">
       <div class="card-body text-success">
         <%# comment.created_at %>
         <div class="card-text"><%= comment.content %></div>（<%= link_to comment.user.name, user_path(comment.user), class: 'author' %>）
-        <%# link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id) %><%= comment.id %>
+        <%# link_to '返信', new_reply_path(:comment_id => comment.id, :post_id => @post.id) %>
         <% if current_user.id == comment.user.id %>
           <%= link_to '削除', comment_path(comment.user, :post_id => @post.id), method: :delete, data: { confirm: "You sure?" } %>
         <% end %>
@@ -93,7 +93,7 @@
 
   <%= form_with(model: @comment_new, local: true) do |f| %>
     <%= hidden_field_tag :post_id, @post.id %>
-    <div class="row">
+    <div class="row ml-1 mr-1">
       <div class="offset-md-1"></div>
         <div class="col-md-6">
           <%= f.text_field :content, class: 'form-control', placeholder: 'コメントを入力...' %>

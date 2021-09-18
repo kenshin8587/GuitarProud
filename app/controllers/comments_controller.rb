@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
       flash[:success] = 'コメントしました'
       redirect_to post_path(params[:post_id])
     else
-      flash.now[:error] = 'コメントできませんでした'
+      flash.now[:danger] = 'コメントできませんでした'
       render :new
     end
   end
@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
       flash[:success] = 'コメントが削除されました'
       redirect_back(fallback_location: post_path(params[:post_id]))
     else
-      flash.now[:error] = 'コメントが削除されませんでした'
+      flash.now[:danger] = 'コメントが削除されませんでした'
       render 'toppages/index'
     end
   end

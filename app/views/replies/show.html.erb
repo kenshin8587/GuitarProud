@@ -1,23 +1,20 @@
-<div class="mb-5">  
-  <% @reply.each do |r| %>
-    <% if @comment.id == r.comment_id %>
-    <ul>
-      <li><%= link_to r.user.name, user_path(r.user.id), class: 'author' %></li>
-      <li><%= r.created_at %></li>
-      <li><%= r.content %><%= r.comment_id %></li>
-    </ul>
-    <% end %>
+<% @reply.each do |r| %>
+  <% if @comment.id == r.comment_id %>
+    <div class="media my-5">  
+      <div class="media-body">
+        <p class="mt-0"><%= link_to r.user.name, user_path(r.user.id) %></p>
+        <p><%= r.content %></p>
+      </div>
+    </div>
   <% end %>
-</div>
+<% end %>
 
 <h4 class="mb-3">返信</h4>
 <div class="row">
   <%= form_with(model: @reply_new, local: true) do |f| %>
     <%= hidden_field_tag :post_id, @post.id %>
-    <%= hidden_field_tag :comment_id, @comment.id %><%= @comment.id %>
-    <div class="col-md-6">  
-      <%= f.text_area :content, class: 'form-text' %>
-    </div>
-    <%= f.submit '返信する', class: 'btn btn-success' %>
+    <%= hidden_field_tag :comment_id, @comment.id %>
+    <%= f.text_area :content, class: 'form-control' %>
+    <%= f.submit '返信する', class: 'btn btn-success mt-3' %>
   <% end %>
 </div>
