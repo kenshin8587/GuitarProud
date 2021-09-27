@@ -21,10 +21,9 @@
   </div>
 <% else %>
   <div class="card bg-dark text-white mb-3">
-    <%= image_tag '/Users/takenobuseo/Documents/ruby/first_ruby/app/assets/images/LUNA_SEA.jpeg', :size =>'320x480', class: 'card-img-top' %>
     <div class="card-body">
-      <h5 class="card-title">Welcome to GuitarProud!</h5>
-      <p lass="card-text"><%= link_to 'アカウントを作成', signup_path %></p>
+      <h5 class="card-title">GuitarProudへようこそ！<%= link_to 'ログインはこちら!' ,login_path, class: 'btn btn-primary btn-sm' %></h5>
+      <p class="card-text"><%= link_to 'アカウントをお持ちでない方はこちら！', signup_path %></p>
     </div>
   </div>
 <% end %>

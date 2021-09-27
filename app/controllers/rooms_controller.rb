@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+  before_action :require_user_logged_in
 
   def create
     @room = Room.create
